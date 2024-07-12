@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 const Square = ({ value, onSquareClick }) => {
   return (
     <button
-      className="flex items-center justify-center w-24 h-24 border-2 border-gray-400 hover:border-red-600 rounded-xl m-3 bg-gray-800"
       onClick={onSquareClick}
+      className="h-24 w-24 bg-slate-700 flex items-center justify-center text-6xl text-white font-bold rounded-xl border-2 border-slate-500 hover:border-red-500"
     >
-      {value && <img src={value} alt="img" width={35} height={35} />}
+      {value ? <img src={value} alt="player" width={40} height={40} /> : null}
     </button>
   );
 };

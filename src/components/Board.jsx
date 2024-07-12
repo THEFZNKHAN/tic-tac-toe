@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import Square from "./Square";
 import calculateWinner from "../utils/calculateWinner";
-import cross from "../../public/assets/cross.png";
-import circle from "../../public/assets/circle.png";
+import cross from "/assets/cross.png";
+import circle from "/assets/circle.png";
 
 const Board = () => {
   const [xIsNext, setXIsNext] = useState(true);

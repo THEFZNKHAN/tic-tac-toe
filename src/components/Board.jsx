@@ -3,10 +3,9 @@ import Square from "./Square";
 import calculateWinner from "../utils/calculateWinner";
 import cross from "/assets/cross.png";
 import circle from "/assets/circle.png";
+import PropTypes from "prop-types";
 
-const Board = () => {
-  const [xIsNext, setXIsNext] = useState(true);
-  const [squares, setSquares] = useState(Array(9).fill(null));
+const Board = ({ xIsNext, squares, onPlay }) => {
   const [winCountX, setWinCountX] = useState(0);
   const [winCountO, setWinCountO] = useState(0);
   const [status, setStatus] = useState("Next player: X");
@@ -21,10 +20,8 @@ const Board = () => {
         setStatus("Winner: O");
         setWinCountO((prev) => prev + 1);
       }
-      setTimeout(() => resetBoard(), 2000);
     } else if (squares.every((square) => square !== null)) {
       setStatus("It's a draw!");
-      setTimeout(() => resetBoard(), 2000);
     } else {
       setStatus(`Next player: ${xIsNext ? "X" : "O"}`);
     }
@@ -34,27 +31,11 @@ const Board = () => {
     if (squares[i] || calculateWinner(squares)) return;
     const nextSquares = squares.slice();
     nextSquares[i] = xIsNext ? cross : circle;
-    setSquares(nextSquares);
-    setXIsNext(!xIsNext);
-  };
-
-  const resetBoard = () => {
-    setSquares(Array(9).fill(null));
-    setXIsNext(true);
-    setStatus("Next player: X");
+    onPlay(nextSquares);
   };
 
   return (
     <>
-      <div className="fixed right-6 top-6">
-        <button
-          onClick={resetBoard}
-          className="flex items-center justify-center border-2 bg-red-600 text-white w-28 h-12 font-bold text-xl p-4 rounded-xl font-sherif max-sm:w-24 max-sm:h-10 max-sm:text-lg"
-        >
-          Reset
-        </button>
-      </div>
-
       <div className="flex flex-col h-full w-full items-center p-4">
         <div
           id="status"
@@ -96,6 +77,12 @@ const Board = () => {
       </div>
     </>
   );
+};
+
+Board.propTypes = {
+  xIsNext: PropTypes.bool.isRequired,
+  squares: PropTypes.array.isRequired,
+  onPlay: PropTypes.func.isRequired,
 };
 
 export default Board;
